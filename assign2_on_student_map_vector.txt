@@ -1,0 +1,102 @@
+/******************************************************************************
+
+create a class Student 
+having data members int rollNo, int age, char sex, name(char*),
+map<string, int> containing marks of subjects (sort according to marks)
+English, Maths, Science, History, Geography
+create 10 students and add it to a vector.
+ 
+sort the vector according to name.
+
+*******************************************************************************/
+
+#include <iostream>
+#include <map>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Student
+{
+
+    int rno;
+    int age;
+    char sex;
+    char *name = new char[80];
+    
+public:
+
+    map<string,int> mp;
+    void setData()
+    {
+        
+        cout<<"Enter Rollno : ";
+        cin>>rno;
+        cout<<"Enter age : ";
+        cin>>age;
+        cout<<"Enter sex : ";
+        cin>>sex;
+        cout<<"Enter Name : ";
+        cin.ignore();
+        cin.getline(name,80);
+        
+        
+        cout<<"Enter subject name and marks of students : "<<endl;
+        for(int i=0;i<5;i++)
+        {
+            
+            string s;
+            int n;
+            cin>>s>>n;
+            mp.insert(make_pair(s,n));
+        }
+        cout<<endl;
+        
+    }
+    
+    void display()
+    {
+        cout<<endl;
+        cout<<"Name    : "<<name<<endl;
+        cout<<"Roll No : "<<rno<<endl;
+        cout<<"Age     : "<<age<<endl;
+        cout<<"Sex     : "<<sex<<endl;
+        
+        cout<<"Marks of the student"<<endl;
+        map<string, int>::iterator it;
+        for(it=mp.begin(); it!=mp.end(); it++)
+        {
+            cout<<it->first << " - "<< it->second<<endl;
+        }
+    }
+    
+    string getName() const
+    {
+        return name;
+    }
+};
+bool compareByName(const Student& a, const Student& b)
+{
+    return a.getName()<b.getName();
+}
+int main()
+{
+    vector<Student> students;
+    for(int i=0;i<3;i++)
+    {
+        Student s;
+        s.setData();
+        students.push_back(s);
+        
+    }
+    
+    sort(students.begin(), students.end(),compareByName);
+    
+    for(int i=0;i<3;i++)
+    {
+        
+        students[i].display();
+    }
+    return 0;
+}
+
